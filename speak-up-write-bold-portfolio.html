@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speak Up! Write Bold! — Digital Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Space+Mono:wght@400;700&family=Archivo:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #f7f2e6;
+    --paper-deep: #efe7d6;
+    --ink: #211f1b;
+    --ink-soft: #55504a;
+    --red: #b6391f;
+    --red-soft: #d97757bd;
+    --gold: #9c7a24;
+    --teal: #2c5b56;
+    --line: #d8cdb4;
+    --card: #fffdf8;
+    --radius: 2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', serif;
+    line-height:1.65;
+    font-size:17px;
+  }
+  ::selection{background:var(--red-soft); color:#fff;}
+
+  h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:700; margin:0 0 .3em; letter-spacing:-.01em;}
+  a{color:var(--red);}
+
+  /* ---------- layout ---------- */
+  .shell{display:flex; min-height:100vh;}
+  nav.rail{
+    width:250px; flex:none; position:sticky; top:0; height:100vh;
+    background:var(--ink); color:var(--paper);
+    padding:2.2rem 1.6rem; overflow-y:auto;
+  }
+  nav.rail .brand{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:600;
+    font-size:1.15rem; line-height:1.3; color:#fff; margin-bottom:.2rem;
+  }
+  nav.rail .brand small{display:block; font-family:'Archivo',sans-serif; font-style:normal; font-weight:500; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:#d3a58a; margin-top:.5rem;}
+  nav.rail ul{list-style:none; padding:0; margin:2rem 0 0;}
+  nav.rail li{margin-bottom:.15rem;}
+  nav.rail a{
+    display:block; color:#cfc9bd; text-decoration:none; font-family:'Archivo',sans-serif;
+    font-size:.82rem; padding:.42rem .5rem; border-radius:2px; letter-spacing:.01em;
+    border-left:2px solid transparent;
+  }
+  nav.rail a:hover{color:#fff; border-left-color:var(--red);}
+  nav.rail .sub a{font-size:.74rem; padding-left:1.1rem; color:#a39d90;}
+  nav.rail .divider{height:1px; background:#3a372f; margin:1.1rem 0;}
+  nav.rail .foot{font-family:'Archivo',sans-serif; font-size:.68rem; color:#7d786d; margin-top:2rem; line-height:1.6;}
+
+  main{flex:1; min-width:0;}
+
+  .hero{
+    padding:6.5rem 6vw 5rem; position:relative; overflow:hidden;
+    border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(circle at 85% 15%, rgba(182,57,31,0.07), transparent 45%),
+      var(--paper);
+  }
+  .hero .eyebrow{font-family:'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:.72rem; color:var(--red); font-weight:600;}
+  .hero h1{font-size:clamp(2.4rem, 6vw, 4.6rem); margin-top:.6rem; line-height:1.02;}
+  .hero h1 em{font-style:italic; color:var(--red); font-weight:500;}
+  .hero .sub{max-width:40em; margin-top:1.2rem; color:var(--ink-soft); font-size:1.08rem;}
+  .hero .meta{
+    margin-top:2.6rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:1.4rem; max-width:760px; font-family:'Archivo',sans-serif;
+  }
+  .hero .meta div{border-top:1px solid var(--line); padding-top:.5rem;}
+  .hero .meta .k{font-size:.66rem; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft);}
+  .hero .meta .v{font-size:.92rem; margin-top:.2rem; font-weight:600;}
+
+  section.chapter{padding:5rem 6vw; border-bottom:1px solid var(--line);}
+  section.chapter:nth-of-type(even){background:var(--paper-deep);}
+  .chapter-head{max-width:900px; margin:0 auto 2.6rem;}
+  .chapter-head .tag{font-family:'Archivo',sans-serif; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--red); font-weight:700;}
+  .chapter-head h2{font-size:clamp(1.7rem,3.4vw,2.5rem); margin-top:.35rem;}
+  .chapter-head .desc{color:var(--ink-soft); max-width:56em; margin-top:.6rem;}
+  .wrap{max-width:900px; margin:0 auto;}
+
+  /* ---------- TEXT 1: letter ---------- */
+  .letter{
+    background:var(--card); border:1px solid var(--line); box-shadow:0 18px 40px -28px rgba(0,0,0,.35);
+    padding:3.2rem clamp(1.6rem,5vw,4rem); position:relative;
+  }
+  .letter::before{
+    content:""; position:absolute; inset:14px; border:1px solid var(--line); pointer-events:none;
+  }
+  .letter .addr{font-size:.95rem; color:var(--ink-soft); white-space:pre-line;}
+  .letter .date{margin-top:1.6rem; font-size:.95rem;}
+  .letter .to{margin-top:1.6rem; white-space:pre-line; font-size:.95rem; color:var(--ink-soft);}
+  .letter .salute{margin-top:1.8rem; font-weight:600;}
+  .letter .subject{
+    text-align:center; font-family:'Archivo',sans-serif; font-weight:700; letter-spacing:.02em;
+    margin:1.6rem 0; text-transform:uppercase; font-size:.98rem;
+  }
+  .letter p{margin:1rem 0;}
+  .letter .num{color:var(--red); font-weight:700; font-family:'Archivo',sans-serif; margin-right:.3em;}
+  .letter ul{margin:.8rem 0; padding-left:1.4rem;}
+  .letter .signoff{margin-top:2.2rem;}
+  .letter .sig-line{border-top:1px solid var(--ink); width:250px; margin:2.6rem 0 .4rem;}
+  .letter .sig-name{font-weight:700; letter-spacing:.02em;}
+  .letter .sig-role{color:var(--ink-soft); font-size:.92rem;}
+  .stamp{
+    position:absolute; top:2.4rem; right:2.6rem; width:96px; height:96px; border-radius:50%;
+    border:2px solid var(--red); color:var(--red); display:flex; align-items:center; justify-content:center;
+    text-align:center; font-family:'Archivo',sans-serif; font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
+    transform:rotate(-14deg); opacity:.75; font-weight:700; line-height:1.3;
+  }
+
+  /* ---------- TEXT 2: email ---------- */
+  .mail-app{background:var(--card); border:1px solid var(--line); box-shadow:0 18px 40px -28px rgba(0,0,0,.35); overflow:hidden;}
+  .mail-topbar{background:var(--teal); color:#eaf3f1; padding:1rem 1.6rem; font-family:'Archivo',sans-serif;}
+  .mail-topbar .subj{font-weight:700; font-size:1rem;}
+  .mail-fields{padding:1rem 1.6rem; border-bottom:1px dashed var(--line); font-family:'Archivo',sans-serif; font-size:.82rem; color:var(--ink-soft);}
+  .mail-fields div{margin:.15rem 0;}
+  .mail-fields b{color:var(--ink); font-weight:600;}
+  .mail-body{padding:1.8rem 1.9rem 2.4rem;}
+  .mail-body p{margin:0 0 1.05rem;}
+  .mail-body ul{padding-left:1.3rem; margin:.8rem 0 1.2rem;}
+  .mail-body li{margin-bottom:.6rem;}
+  .mail-sign{margin-top:1.6rem; color:var(--ink-soft);}
+  .whatsapp-chip{
+    display:inline-block; margin-top:1.2rem; font-family:'Archivo',sans-serif; font-size:.76rem;
+    background:#eef6f2; color:var(--teal); border:1px solid #cfe4dc; padding:.35rem .7rem; border-radius:20px;
+  }
+
+  /* ---------- TEXT 3: instagram ---------- */
+  .ig-card{max-width:480px; margin:0 auto; background:var(--card); border:1px solid var(--line); box-shadow:0 18px 40px -28px rgba(0,0,0,.35);}
+  .ig-head{display:flex; align-items:center; gap:.7rem; padding:.9rem 1rem; border-bottom:1px solid var(--line); font-family:'Archivo',sans-serif;}
+  .ig-avatar{width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--red),var(--gold)); flex:none;}
+  .ig-head .handle{font-weight:700; font-size:.9rem;}
+  .ig-head .loc{font-size:.72rem; color:var(--ink-soft);}
+  .ig-media{
+    aspect-ratio:1/1; background:
+      linear-gradient(160deg, #26463f, #b6391f 130%);
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .ig-media .ig-title{
+    font-family:'Fraunces',serif; font-style:italic; color:#fff; text-align:center; padding:2rem;
+    font-size:clamp(1.4rem,4vw,2.1rem); text-shadow:0 2px 20px rgba(0,0,0,.35);
+  }
+  .ig-actions{display:flex; gap:1rem; padding:.9rem 1rem .3rem; font-size:1.1rem; color:var(--ink-soft);}
+  .ig-likes{padding:0 1rem; font-family:'Archivo',sans-serif; font-weight:700; font-size:.85rem;}
+  .ig-caption{padding:.6rem 1rem 0; font-size:.95rem;}
+  .ig-caption p{margin:0 0 .9rem;}
+  .ig-tags{padding:.2rem 1rem 1rem; color:var(--teal); font-size:.85rem; font-family:'Archivo',sans-serif;}
+  .ig-stats{display:flex; gap:1.2rem; padding:.7rem 1rem 1.1rem; border-top:1px solid var(--line); font-family:'Archivo',sans-serif; font-size:.78rem; color:var(--ink-soft);}
+
+  /* ---------- TEXT 4: process ---------- */
+  .stepper{display:flex; flex-wrap:wrap; gap:.6rem; max-width:900px; margin:0 auto 3.4rem; font-family:'Archivo',sans-serif;}
+  .step{
+    flex:1 1 150px; background:var(--card); border:1px solid var(--line); padding:.9rem 1rem;
+    position:relative; font-size:.78rem;
+  }
+  .step .n{display:block; font-family:'Fraunces',serif; font-size:1.5rem; font-weight:700; color:var(--red);}
+  .step .t{text-transform:uppercase; letter-spacing:.06em; font-weight:600; margin-top:.15rem;}
+  .step.active{border-color:var(--red); box-shadow:0 0 0 1px var(--red) inset;}
+
+  .stage{max-width:900px; margin:0 auto 4.6rem;}
+  .stage-label{
+    display:inline-flex; align-items:center; gap:.5rem; font-family:'Archivo',sans-serif;
+    font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--ink);
+    padding:.35rem .8rem; margin-bottom:1.1rem; font-weight:700;
+  }
+  .stage-label .dot{width:7px;height:7px;border-radius:50%;background:var(--red);}
+  .stage h3{font-size:1.4rem;}
+
+  .mindmap{background:var(--card); border:1px solid var(--line); padding:2rem clamp(1.2rem,4vw,2.6rem);}
+  .mindmap .q{font-family:'Fraunces',serif; font-style:italic; font-size:1.2rem; color:var(--red); margin-bottom:1.4rem;}
+  .mm-grid{display:grid; grid-template-columns:1fr; gap:1.6rem;}
+  @media(min-width:720px){.mm-grid{grid-template-columns:1fr 1fr;}}
+  .mm-col h4{font-family:'Archivo',sans-serif; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin-bottom:.6rem;}
+  .mm-col ul{margin:0; padding-left:1.2rem;}
+  .mm-col li{margin-bottom:.5rem; font-size:.95rem;}
+  .plus li::marker{color:var(--teal);}
+  .minus li::marker{color:var(--red);}
+  .outline{margin-top:1.8rem; border-top:1px dashed var(--line); padding-top:1.6rem;}
+  .outline ol{padding-left:1.3rem;}
+  .outline li{margin-bottom:.4rem;}
+
+  .draft{
+    background:#fbf9f2; border:1px solid var(--line); padding:2.2rem clamp(1.3rem,4vw,2.8rem);
+    font-family:'Space Mono', monospace; font-size:.86rem; line-height:1.8; color:#3a362f;
+    position:relative;
+  }
+  .draft::before{
+    content:"FIRST DRAFT — UNEDITED"; position:absolute; top:-11px; left:24px; background:var(--paper-deep);
+    padding:0 .6rem; font-size:.62rem; letter-spacing:.12em; color:var(--ink-soft);
+  }
+  section.chapter:nth-of-type(odd) .draft::before{background:var(--paper);}
+  .draft h4{font-family:'Space Mono',monospace; font-weight:700; text-transform:uppercase; font-size:.86rem; margin:1.6rem 0 .5rem; color:var(--ink);}
+  .draft h4:first-child{margin-top:0;}
+  .err{color:var(--red); text-decoration:underline wavy var(--red); text-decoration-thickness:1px; text-underline-offset:3px;}
+
+  .feedback-table{width:100%; border-collapse:collapse; font-size:.87rem; background:var(--card);}
+  .feedback-table th,.feedback-table td{border:1px solid var(--line); padding:.7rem .8rem; vertical-align:top; text-align:left;}
+  .feedback-table th{font-family:'Archivo',sans-serif; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; background:var(--paper-deep); color:var(--ink-soft);}
+  .feedback-table td:first-child{font-family:'Archivo',sans-serif; font-weight:700; white-space:nowrap;}
+  .peer-quote{
+    margin-top:1.8rem; padding:1.4rem 1.6rem; border-left:3px solid var(--gold); background:var(--card);
+    font-family:'Fraunces',serif; font-style:italic; color:#4a4128;
+  }
+  .peer-quote cite{display:block; margin-top:.6rem; font-family:'Archivo',sans-serif; font-style:normal; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft);}
+
+  .diffwrap{display:grid; gap:.9rem;}
+  .diffline{background:var(--card); border:1px solid var(--line); padding:1rem 1.3rem; font-size:.92rem;}
+  .diffline .del{color:#9a9184; text-decoration:line-through; text-decoration-color:var(--red);}
+  .diffline .ins{color:var(--teal); font-weight:600;}
+  .diffline .flag{display:block; font-family:'Archivo',sans-serif; font-size:.66rem; text-transform:uppercase; letter-spacing:.1em; color:var(--red); margin-bottom:.35rem;}
+
+  .revised{background:var(--card); border:1px solid var(--line); padding:2.2rem clamp(1.3rem,4vw,2.8rem); margin-top:2rem;}
+  .revised h4{font-size:1.05rem; margin-top:1.6rem;}
+  .revised h4:first-child{margin-top:0;}
+  .revised ul{padding-left:1.3rem;}
+  .revised li{margin-bottom:.6rem;}
+
+  .final-report{
+    background:var(--card); border:1px solid var(--line); box-shadow:0 24px 60px -34px rgba(0,0,0,.4);
+    padding:3.4rem clamp(1.5rem,5vw,4.4rem); position:relative;
+  }
+  .final-report .kicker{font-family:'Archivo',sans-serif; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--red); font-weight:700;}
+  .final-report h3{font-size:clamp(1.5rem,3vw,2.1rem); margin-top:.5rem; line-height:1.15;}
+  .final-report .byline{font-family:'Archivo',sans-serif; font-size:.82rem; color:var(--ink-soft); margin-top:1rem; border-top:1px solid var(--line); padding-top:1rem;}
+  .final-report h4{font-size:1.15rem; margin-top:2.1rem; color:var(--ink); border-left:3px solid var(--red); padding-left:.7rem;}
+  .final-report h5{font-family:'Archivo',sans-serif; font-size:.82rem; text-transform:uppercase; letter-spacing:.06em; color:var(--teal); margin:1.3rem 0 .4rem;}
+  .final-report p{margin:0 0 1.05rem;}
+  .seal{
+    margin-top:2.6rem; padding-top:1.6rem; border-top:1px solid var(--line); text-align:center;
+    font-family:'Fraunces',serif; font-style:italic; color:var(--ink-soft); font-size:.95rem;
+  }
+
+  footer{padding:3.5rem 6vw; text-align:center; font-family:'Archivo',sans-serif; font-size:.78rem; color:var(--ink-soft);}
+
+  @media(max-width:880px){
+    .shell{flex-direction:column;}
+    nav.rail{width:100%; height:auto; position:relative; padding:1.4rem 1.2rem;}
+    nav.rail ul{display:flex; flex-wrap:wrap; gap:.2rem; margin-top:1rem;}
+    nav.rail .sub{display:none;}
+    nav.rail .divider,.foot{display:none;}
+    .hero,section.chapter{padding:3.2rem 5vw;}
+    .stamp{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <nav class="rail">
+    <div class="brand">Speak Up!<br>Write Bold!<small>Digital Portfolio</small></div>
+    <ul>
+      <li><a href="#cover">Cover</a></li>
+      <li><a href="#text1">Text 1 — Formal Letter</a></li>
+      <li><a href="#text2">Text 2 — Informal Email</a></li>
+      <li><a href="#text3">Text 3 — Social Media Post</a></li>
+      <li><a href="#text4">Text 4 — Report &amp; Critical Review</a></li>
+      <li class="sub"><a href="#s41">4.1 Pre-writing</a></li>
+      <li class="sub"><a href="#s42">4.2 Drafting</a></li>
+      <li class="sub"><a href="#s43">4.3 Revision</a></li>
+      <li class="sub"><a href="#s44">4.4 Editing</a></li>
+      <li class="sub"><a href="#s45">4.5 Publishing</a></li>
+    </ul>
+    <div class="divider"></div>
+    <div class="foot">
+      Harvard Ngu Wei Jie<br>
+      PPISMP · GEEC1052<br>
+      IPG Kampus Batu Lintang, Kuching
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="hero" id="cover">
+      <div class="eyebrow">GEEC1052 · Effective Communication in English</div>
+      <h1>Speak Up!<br><em>Write Bold!</em></h1>
+      <p class="sub">A digital portfolio tracing one competition through four registers of English — a formal proposal, a warm invitation to a friend, a burst of public celebration, and a report rebuilt in five drafts.</p>
+      <div class="meta">
+        <div><div class="k">Prepared by</div><div class="v">Harvard Ngu Wei Jie</div></div>
+        <div><div class="k">Programme</div><div class="v">PPISMP</div></div>
+        <div><div class="k">Campus</div><div class="v">IPG Kampus Batu Lintang, Kuching</div></div>
+        <div><div class="k">Submission</div><div class="v">20 July 2026</div></div>
+      </div>
+    </section>
+
+    <!-- TEXT 1 -->
+    <section class="chapter" id="text1">
+      <div class="chapter-head">
+        <div class="tag">Text 1</div>
+        <h2>Formal Letter</h2>
+        <p class="desc">A request for permission, addressed to the Campus Director — measured, structured, and precise.</p>
+      </div>
+      <div class="wrap">
+        <div class="letter">
+          <div class="stamp">ELS<br>Batu Lintang</div>
+          <div class="addr">Harvard Ngu Wei Jie
+D-03-43, Kolej Kediaman Lelaki,
+IPG Kampus Batu Lintang,
+Jalan College, Batu Lintang,
+93200 Kuching.</div>
+          <div class="date">26 June 2026</div>
+          <div class="to">The Director,
+IPG Kampus Batu Lintang,
+Jalan College, Batu Lintang,
+93200 Kuching.</div>
+          <p class="salute">Dear Madam,</p>
+          <div class="subject">Application for Permission to Organise the 'Speak Up! Write Bold!' English Language Competition</div>
+
+          <p>I am writing on behalf of the English Language Society (ELS) of IPG Kampus Batu Lintang to respectfully seek your kind permission to organise an English Language Competition entitled <em>'Speak Up! Write Bold!'</em> on campus. This competition aims to foster a love for the English language while cultivating critical thinking, creativity, and communicative competence among our fellow students.</p>
+
+          <p><span class="num">2.</span><strong>Competition Overview</strong><br>
+          The proposed competition comprises two main events: a Public Speaking Contest and a Creative Writing Challenge. Both events are designed to challenge participants intellectually and creatively, encouraging them to use the English language with confidence and proficiency. The competition will be open to all students across different programmes at our campus.</p>
+
+          <p><span class="num">3.</span><strong>Proposed Details</strong></p>
+          <ul>
+            <li><strong>Date:</strong> 15 July 2026 (Wednesday)</li>
+            <li><strong>Venue:</strong> Auditorium Taza, IPG Kampus Batu Lintang</li>
+            <li><strong>Time:</strong> 8.00 a.m. – 5.00 p.m.</li>
+            <li><strong>Target Participants:</strong> All IPG Kampus Batu Lintang students (estimated 150 participants)</li>
+            <li><strong>Organising Committee:</strong> English Language Society (ELS)</li>
+          </ul>
+
+          <p><span class="num">4.</span><strong>Benefits of the Competition</strong><br>
+          We firmly believe this competition will yield significant benefits for the campus community, namely:</p>
+          <ul>
+            <li>Enhancing students' English language proficiency in both written and oral communication;</li>
+            <li>Encouraging active participation in co-curricular activities aligned with the campus's academic vision;</li>
+            <li>Developing higher-order thinking skills (HOTS) through creative and analytical tasks;</li>
+            <li>Cultivating a competitive yet collaborative spirit among students.</li>
+          </ul>
+
+          <p><span class="num">5.</span><strong>Budget and Resources</strong><br>
+          The English Language Society shall bear the full cost of this event. An estimated budget of RM 2,500 has been allocated, covering prizes, refreshments, printing materials, and decorations. We are also grateful to confirm that several academic staff members have voluntarily agreed to serve as judges and facilitators.</p>
+
+          <p><span class="num">6.</span><strong>Closing</strong><br>
+          We sincerely hope that you will view this proposal favourably and grant us your esteemed permission to proceed. We assure you that the event will be conducted with the utmost professionalism and in full compliance with all campus regulations. Should you require any further information or clarification, please do not hesitate to contact me at wweijie113@gmail.com or 011-5583-1488.</p>
+
+          <p>Thank you for your time and consideration. We look forward to your positive response.</p>
+
+          <div class="signoff">
+            Yours faithfully,
+            <div class="sig-line"></div>
+            <div class="sig-name">HARVARD NGU WEI JIE</div>
+            <div class="sig-role">President, English Language Society (ELS)<br>IPG Kampus Batu Lintang, Kuching</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEXT 2 -->
+    <section class="chapter" id="text2">
+      <div class="chapter-head">
+        <div class="tag">Text 2</div>
+        <h2>Informal Email</h2>
+        <p class="desc">The same news, addressed to a best friend at another campus — quick, warm, and full of feeling.</p>
+      </div>
+      <div class="wrap">
+        <div class="mail-app">
+          <div class="mail-topbar"><span class="subj">You've GOT to Come to This! 🎉 – 'Speak Up! Write Bold!' Competition</span></div>
+          <div class="mail-fields">
+            <div><b>From:</b> g-ipgp250400461@moe-dl.edu.my</div>
+            <div><b>To:</b> g-ipgp253108049@moe-dl.edu.my</div>
+            <div><b>Date:</b> 26 June 2026, 9:15 a.m.</div>
+          </div>
+          <div class="mail-body">
+            <p>Hey Ming wei!</p>
+            <p>How are you doing? I hope things are going well over at IPG Kampus Tun Abdul Razak! I miss hanging out with you. It feels like forever since our last English camp together!</p>
+            <p>Anyway, I'm writing because I have the most exciting news — our English Language Society here at Kampus Batu Lintang is organising a big English Language Competition called <em>'Speak Up! Write Bold!'</em> and I would absolutely love for you to come and watch (and maybe even compete, if your campus sends a team)! 😊</p>
+            <p><strong>So, what's happening?</strong><br>
+            The competition is going to be held on 15 July 2026, right here at Auditorium Taza, Kampus Batu Lintang. It's going to run from morning until evening — basically a full-day event packed with exciting stuff!</p>
+            <p>Here are some highlights you definitely don't want to miss:</p>
+            <ul>
+              <li>🎤 <strong>Public Speaking Contest</strong> — participants deliver a 5-minute speech on thought-provoking current issues. Some of the topics this year are absolutely riveting — trust me, there will be some jaw-dropping moments!</li>
+              <li>✍️ <strong>Creative Writing Challenge</strong> — participants write a short story or poem under timed conditions. The themes are surprising and super creative!</li>
+              <li>🏆 <strong>Grand Prize Ceremony</strong> — there are amazing cash prizes and trophies for winners, plus participation certificates for everyone. It's so worth it!</li>
+              <li>🎭 <strong>Cultural Performance Slot</strong> — there's also an English drama skit by our ELS members between rounds. I'm actually in it, so please come and cheer me on! 😂</li>
+            </ul>
+            <p>Honestly, Ming Wei, I think you'd love the atmosphere. Last year's competition (which was smaller, just within our campus) was already super energising. This year, we're inviting students from other campuses too, so it's going to be even bigger and better!</p>
+            <p>If you're interested in joining as a competitor, just let me know ASAP — I can give you all the registration details. The deadline for external participants is 5 July 2026. And even if you're just coming to support, you're more than welcome! I'll make sure we grab lunch together during the break. 😍</p>
+            <p>Please say yes! It would mean the world to me to have my best friend there. Drop me a message or WhatsApp me whenever you can.</p>
+            <span class="whatsapp-chip">📱 WhatsApp: 011-5583-1488</span>
+            <p class="mail-sign">Can't wait to see you!<br>Your friend,<br><strong>Harvard</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEXT 3 -->
+    <section class="chapter" id="text3">
+      <div class="chapter-head">
+        <div class="tag">Text 3</div>
+        <h2>Social Media Post</h2>
+        <p class="desc">Posted the evening the competition wrapped — public, celebratory, and unfiltered.</p>
+      </div>
+      <div class="wrap">
+        <div class="ig-card">
+          <div class="ig-head">
+            <div class="ig-avatar"></div>
+            <div>
+              <div class="handle">@wweijie113</div>
+              <div class="loc">IPG Kampus Batu Lintang · 15 July 2026</div>
+            </div>
+          </div>
+          <div class="ig-media"><div class="ig-title">🔥 Today Was Everything. 🔥</div></div>
+          <div class="ig-actions">❤️ 💬 🔁 📤</div>
+          <div class="ig-likes">1.2K likes</div>
+          <div class="ig-caption">
+            <p><strong>wweijie113</strong> What an incredible day it has been! 🙌 Our 'Speak Up! Write Bold!' English Language Competition at IPG Kampus Batu Lintang has officially wrapped up, and honestly? I am still buzzing with energy right now! ⚡</p>
+            <p>From the moment the first contestant stepped onto that stage for the Public Speaking Contest, I knew today was going to be something special. Watching my fellow students command the room with their words — confident, articulate, and so passionate — genuinely gave me goosebumps. 🎤✨</p>
+            <p>And the Creative Writing Challenge? Oh my goodness. Seeing everyone bent over their papers, pouring their hearts out into stories and poems, reminded me why I fell in love with the English language in the first place. Language is not just a subject — it is a superpower. 💪📝</p>
+            <p>Personally, this competition means so much to me because I was part of the organising committee. There were late nights, endless planning sessions, and moments where I genuinely questioned whether we could pull it off. But seeing everything come together today — the smiles, the applause, the tears of joy from the winners — made every single sacrifice absolutely worth it. 🥹❤️</p>
+            <p>To every participant: you were AMAZING. To every audience member who cheered us on: THANK YOU. And to my fellow ELS committee members — we did it, guys. We actually did it. 🏆🎉</p>
+            <p>If there's one thing today taught me, it's this: never underestimate the power of your voice — spoken or written. Keep speaking up. Keep writing bold. 💬✍️</p>
+          </div>
+          <div class="ig-tags">#SpeakUpWriteBold #IPGKampusBatuLintang #EnglishLanguageCompetition #ELSKampusIK #PublicSpeaking #CreativeWriting #StudentLife #IPGlife #ProudOrganiser #EnglishIsPower</div>
+          <div class="ig-stats"><span>💬 248 comments</span><span>❤️ 1.2K likes</span><span>🔁 87 shares</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEXT 4 -->
+    <section class="chapter" id="text4">
+      <div class="chapter-head">
+        <div class="tag">Text 4</div>
+        <h2>Report with Critical Review</h2>
+        <p class="desc">The same evaluation, rebuilt five times. Each stage is kept exactly as it was written, so the process — not just the polish — is visible.</p>
+      </div>
+
+      <div class="stepper">
+        <div class="step"><span class="n">4.1</span><span class="t">Pre-writing</span></div>
+        <div class="step"><span class="n">4.2</span><span class="t">Drafting</span></div>
+        <div class="step"><span class="n">4.3</span><span class="t">Revision</span></div>
+        <div class="step"><span class="n">4.4</span><span class="t">Editing</span></div>
+        <div class="step active"><span class="n">4.5</span><span class="t">Publishing</span></div>
+      </div>
+
+      <!-- 4.1 -->
+      <div class="stage" id="s41">
+        <div class="stage-label"><span class="dot"></span>4.1 Pre-writing</div>
+        <h3>Brainstorming &amp; Outline</h3>
+        <div class="mindmap">
+          <div class="q">Central question: was the competition a success — what worked, and what needs improvement?</div>
+          <p style="font-family:'Archivo',sans-serif; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:1rem;">Key areas to evaluate: organisation &amp; logistics · quality of performances · judging criteria · audience engagement · impact on language culture</p>
+          <div class="mm-grid">
+            <div class="mm-col">
+              <h4>Possible strengths</h4>
+              <ul class="plus">
+                <li>High turnout — over 150 participants and audience members</li>
+                <li>Diverse competition formats catering to different strengths (speaking vs. writing)</li>
+                <li>Positive feedback from participants and lecturers</li>
+              </ul>
+            </div>
+            <div class="mm-col">
+              <h4>Possible weaknesses</h4>
+              <ul class="minus">
+                <li>Time overrun during afternoon session</li>
+                <li>Technical issues with microphone during public speaking round</li>
+                <li>Limited external campus participation (only 2 other campuses joined)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="outline">
+            <h4 style="font-family:'Archivo',sans-serif; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);">Report outline</h4>
+            <ol>
+              <li>Introduction — purpose and background of the competition</li>
+              <li>Summary of Events — key activities and schedule</li>
+              <li>Critical Evaluation — strengths and areas for improvement</li>
+              <li>Recommendations — suggestions for future competitions</li>
+              <li>Conclusion — overall assessment</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.2 -->
+      <div class="stage" id="s42">
+        <div class="stage-label"><span class="dot"></span>4.2 Drafting</div>
+        <h3>Initial Report Structure</h3>
+        <div class="draft">
+          <p style="text-align:center; font-weight:700;">A CRITICAL REVIEW OF THE 'SPEAK UP! WRITE BOLD!' ENGLISH LANGUAGE COMPETITION AT IPG KAMPUS BATU LINTANG</p>
+
+          <h4>1.0 Introduction</h4>
+          <p>The English Language Competition titled 'Speak Up! Write Bold!' was held on 15 July 2026 at Auditorium Taza, IPG Kampus Batu Lintang, Kuching. The event was organised by the English Language Society (ELS) with the aim of promoting English language proficiency among students through two main activities: a Public Speaking Contest and a Creative Writing Challenge. This report <span class="err">provide</span> a critical review of the competition, <span class="err">evaluate</span> its strengths and <span class="err">weakness</span>, and offer <span class="err">recommendation</span> for future events.</p>
+
+          <h4>2.0 Summary of Events</h4>
+          <p>The competition <span class="err">begin</span> at 8.00 a.m. and was divided into two main sessions. The morning session <span class="err">feature</span> the Public Speaking Contest, where 30 participants each delivered a 5-minute persuasive speech on pre-assigned current issue topics. The afternoon session <span class="err">consist</span> of the Creative Writing Challenge, where participants had 90 minutes to produce either a short story or poem based on a theme revealed on the spot. The event concluded with a prize-giving ceremony at approximately 5.30 p.m., which was slightly later than scheduled.</p>
+
+          <h4>3.0 Critical Evaluation</h4>
+          <p><em>3.1 Strengths</em></p>
+          <ul>
+            <li>The competition successfully attracted over 150 participants and spectators.</li>
+            <li>The Public Speaking Contest demonstrated high levels of students' oral competency.</li>
+            <li>Judges provided constructive individual feedback to each contestant, which was greatly appreciated.</li>
+          </ul>
+          <p><em>3.2 Areas for Improvement</em></p>
+          <ul>
+            <li>The event <span class="err">experience</span> a significant time overrun of approximately 90 minutes.</li>
+            <li>Technical problems with the sound system during the morning session <span class="err">disrupt</span> the flow.</li>
+            <li>Participation from <span class="err">external campus</span> was lower than expected.</li>
+          </ul>
+
+          <h4>4.0 Recommendation</h4>
+          <p>For future <span class="err">edition</span> of this competition, the organising committee should consider <span class="err">appoint</span> a dedicated time-keeper, conduct thorough technical checks one day prior, and begin external campus <span class="err">invitation</span> at least two months in advance.</p>
+
+          <h4>5.0 Conclusion</h4>
+          <p>Despite minor setbacks, the 'Speak Up! Write Bold!' competition was a largely successful and meaningful event. It <span class="err">serve</span> as a valuable platform for students to develop and showcase their English language competencies. With the recommended improvements, future competitions have the potential to be even more impactful.</p>
+        </div>
+      </div>
+
+      <!-- 4.3 -->
+      <div class="stage" id="s43">
+        <div class="stage-label"><span class="dot"></span>4.3 Revision</div>
+        <h3>Peer Feedback</h3>
+        <p style="color:var(--ink-soft); margin-bottom:1.2rem;">Reviewed by <strong>Ngu Ming Wei</strong> · 20 July 2026 — overall impression: well-organised and evaluative, but with language errors and sections needing more elaboration.</p>
+        <table class="feedback-table">
+          <thead><tr><th>Section</th><th>Comment / issue identified</th><th>Suggestion</th></tr></thead>
+          <tbody>
+            <tr><td>Throughout</td><td>Several subject–verb agreement errors (e.g. "competition begin", "event experience", "it serve").</td><td>Correct all verb forms to match singular subjects — use "began", "experienced", "serves".</td></tr>
+            <tr><td>Section 1.0</td><td>"This report provide" — grammar error; also the introduction feels too brief.</td><td>Change to "provides". Add a sentence about the significance of the competition to campus culture.</td></tr>
+            <tr><td>Section 2.0</td><td>The summary is factual but does not give enough detail about the audience's reaction or the overall atmosphere.</td><td>Add 1–2 sentences describing the audience's response to create a more vivid picture.</td></tr>
+            <tr><td>Section 3.2</td><td>The word "disrupt" should be in past tense. Also, "participation from external campus" should be plural.</td><td>Change to "disrupted" and "external campuses".</td></tr>
+            <tr><td>Section 4.0</td><td>"appoint" should be "appointing"; "edition" should be "editions"; "invitation" should be "invitations".</td><td>Review gerund usage after "consider". Use plural nouns consistently.</td></tr>
+            <tr><td>Conclusion</td><td>Good overall wrap-up, but the ending feels abrupt.</td><td>End with a visionary sentence about the long-term impact on English language culture at IPG.</td></tr>
+          </tbody>
+        </table>
+        <div class="peer-quote">
+          "Good effort, Harvard! The structure is clear and the critical evaluation shows genuine analytical thinking. Focus on fixing the grammar errors and elaborating a little more in the introduction and conclusion. I believe your final version will be excellent!"
+          <cite>— Ngu Ming Wei, Peer Reviewer</cite>
+        </div>
+      </div>
+
+      <!-- 4.4 -->
+      <div class="stage" id="s44">
+        <div class="stage-label"><span class="dot"></span>4.4 Editing</div>
+        <h3>Revised Report</h3>
+        <p style="color:var(--ink-soft); margin-bottom:1.2rem;">Every correction from the feedback, applied directly. Struck-through text is what left the draft; teal text is what replaced it.</p>
+        <div class="diffwrap">
+          <div class="diffline"><span class="flag">Section 1.0 — grammar + expansion</span>This report <span class="del">provide</span> <span class="ins">provides</span> a critical review… <span class="ins">This event holds particular significance for our campus community, as it represents a meaningful step towards building a vibrant English language culture beyond the classroom.</span></div>
+          <div class="diffline"><span class="flag">Section 2.0 — verb agreement + atmosphere added</span>The competition <span class="del">begin</span> <span class="ins">began</span>… the morning session <span class="del">feature</span> <span class="ins">featured</span>… <span class="ins">The audience responded with great enthusiasm, frequently applauding speakers who demonstrated remarkable confidence and eloquence.</span></div>
+          <div class="diffline"><span class="flag">Section 3.2 — tense + plural</span>The event <span class="del">experience</span> <span class="ins">experienced</span> a significant time overrun… sound system <span class="del">disrupt</span> <span class="ins">disrupted</span> the flow… participation from <span class="del">external campus</span> <span class="ins">external campuses</span> was lower than expected.</div>
+          <div class="diffline"><span class="flag">Section 4.0 — gerund + plurals</span>the committee should consider <span class="del">appoint</span> <span class="ins">appointing</span> a dedicated time-keeper… future <span class="del">edition</span> <span class="ins">editions</span>… <span class="del">invitation</span> <span class="ins">invitations</span> to external campuses should be sent out earlier.</div>
+          <div class="diffline"><span class="flag">Conclusion — verb form + visionary close</span>It <span class="del">serve</span> <span class="ins">serves</span> as a valuable platform… <span class="ins">It is hoped that this competition will become an annual tradition at IPG Kampus Batu Lintang, inspiring future generations of students to embrace the English language with greater confidence and passion.</span></div>
+        </div>
+
+        <div class="revised">
+          <h4>1.0 Introduction</h4>
+          <p>The English Language Competition titled 'Speak Up! Write Bold!' was held on 15 July 2026 at Auditorium Taza, IPG Kampus Batu Lintang, Kuching. Organised by the English Language Society (ELS), the competition aimed to foster English language proficiency among students through two engaging activities: a Public Speaking Contest and a Creative Writing Challenge. This event holds particular significance for our campus community, as it represents a meaningful step towards building a vibrant English language culture beyond the classroom. This report provides a critical review of the competition, evaluates its strengths and weaknesses, and offers recommendations for future events.</p>
+          <h4>2.0 Summary of Events</h4>
+          <p>The competition began at 8.00 a.m. and was divided into two main sessions. The morning session featured the Public Speaking Contest, where 30 participants each delivered a 5-minute persuasive speech on pre-assigned current issue topics. The audience responded with great enthusiasm, frequently applauding speakers who demonstrated remarkable confidence and eloquence. The afternoon session consisted of the Creative Writing Challenge, where participants had 90 minutes to produce either a short story or poem based on a theme revealed on the spot. The atmosphere during this session was one of focused creativity. The event concluded with a prize-giving ceremony at approximately 5.30 p.m., which was slightly later than scheduled.</p>
+          <h4>3.0 Critical Evaluation</h4>
+          <p><em>3.1 Strengths</em></p>
+          <ul>
+            <li>The competition successfully attracted over 150 participants and spectators, reflecting strong campus interest in English language activities.</li>
+            <li>The Public Speaking Contest demonstrated remarkably high levels of students' oral competency, with several contestants delivering speeches that rivalled professional standards.</li>
+            <li>Judges provided constructive individual feedback to each contestant, which was greatly appreciated and contributed to the event's educational value.</li>
+          </ul>
+          <p><em>3.2 Areas for Improvement</em></p>
+          <ul>
+            <li>The event experienced a significant time overrun of approximately 90 minutes, which inconvenienced some audience members and participants.</li>
+            <li>Technical problems with the sound system during the morning session disrupted the flow of several speeches and detracted from the overall professionalism of the event.</li>
+            <li>Participation from external campuses was lower than expected, with only two other IPG campuses sending representatives.</li>
+          </ul>
+          <h4>4.0 Recommendations</h4>
+          <p>For future editions of this competition, the organising committee should consider appointing a dedicated time-keeper to maintain a strict schedule throughout the day. Additionally, comprehensive technical checks should be conducted one full day prior to the event to prevent equipment failures. Furthermore, invitations to external campuses should be sent out at least two months in advance to allow sufficient time for preparation and campus-level selection processes.</p>
+          <h4>5.0 Conclusion</h4>
+          <p>Despite minor setbacks, the 'Speak Up! Write Bold!' competition was a largely successful and meaningful event that served as a valuable platform for students to develop and showcase their English language competencies. It is hoped that this competition will become an annual tradition at IPG Kampus Batu Lintang, inspiring future generations of students to embrace the English language with greater confidence and passion. With the recommended improvements in place, future competitions have every potential to be even more impactful and far-reaching in their contributions to English language education.</p>
+        </div>
+      </div>
+
+      <!-- 4.5 -->
+      <div class="stage" id="s45">
+        <div class="stage-label"><span class="dot"></span>4.5 Publishing</div>
+        <h3>Final Polished Report</h3>
+        <div class="final-report">
+          <div class="kicker">Final Version · Published in the Digital Portfolio</div>
+          <h3>A Critical Review of the 'Speak Up! Write Bold!' English Language Competition</h3>
+          <div class="byline">IPG Kampus Batu Lintang, Kuching &nbsp;·&nbsp; Prepared by Harvard Ngu Wei Jie &nbsp;·&nbsp; 26 July 2026</div>
+
+          <h4>1.0 Introduction</h4>
+          <p>The English Language Competition entitled 'Speak Up! Write Bold!' was successfully held on 15 July 2026 at Auditorium Taza, IPG Kampus Batu Lintang, Kuching. Organised by the English Language Society (ELS) under the patronage of the Campus Director, the competition was designed to cultivate students' English language proficiency and confidence through two intellectually stimulating events: a Public Speaking Contest and a Creative Writing Challenge. This competition holds considerable significance for the campus community, as it represents a proactive initiative to extend English language learning beyond the conventional classroom setting. This report provides a critical evaluation of the competition, assessing its overall effectiveness, highlighting key strengths, identifying areas that require improvement, and proposing actionable recommendations for future events.</p>
+
+          <h4>2.0 Summary of Events</h4>
+          <p>The competition commenced at 8.00 a.m. and was structured into two main sessions. The morning session featured the Public Speaking Contest, in which 30 selected participants each delivered a five-minute persuasive speech on pre-assigned topics pertaining to current global and national issues. Contestants demonstrated admirable levels of preparation, with many delivering eloquent and well-reasoned arguments that captivated the audience. Spectators responded with enthusiastic applause, creating an energetic and encouraging atmosphere throughout the session.</p>
+          <p>The afternoon session was dedicated to the Creative Writing Challenge, during which participants were given 90 minutes to craft either an original short story or poem inspired by a theme that was revealed only at the commencement of the session. The element of surprise added an exciting dimension to the challenge, testing participants' ability to think critically and creatively under pressure. The event culminated in a Grand Prize-Giving Ceremony at approximately 5.30 p.m., celebrating the outstanding achievements of all participants.</p>
+
+          <h4>3.0 Critical Evaluation</h4>
+          <h5>3.1 Strengths</h5>
+          <p>The competition demonstrated several commendable strengths that contributed to its overall success. Firstly, the event attracted an impressive turnout of over 150 participants and audience members, reflecting the strong interest and enthusiasm among students towards English language activities. This level of participation surpassed initial projections and is indicative of a growing appreciation for the English language within the campus community.</p>
+          <p>Secondly, the Public Speaking Contest served as a compelling showcase of students' oral communication abilities. Several contestants delivered speeches of exceptional quality, exhibiting not only linguistic proficiency but also remarkable composure, persuasive rhetoric, and critical thinking skills. This demonstrated that students at IPG Kampus Ilmu Khas possess significant potential in English oral communication.</p>
+          <p>Thirdly, the decision by the judging panel to provide personalised, constructive feedback to each contestant following their performances was greatly valued. This practice transformed the competition into a genuine learning experience, allowing participants to identify their strengths and areas for growth, thereby aligning the event with its core educational objectives.</p>
+
+          <h5>3.2 Areas for Improvement</h5>
+          <p>Despite its successes, the competition was not without shortcomings. The most notable issue was the significant time overrun of approximately 90 minutes, which resulted in the prize-giving ceremony commencing well beyond the scheduled time. This inconvenienced a number of audience members and highlighted the need for more rigorous time management protocols.</p>
+          <p>Additionally, the event was hampered by recurring technical difficulties with the public address system during the morning session. These interruptions disrupted the momentum of several speeches and, at times, affected the audience's ability to clearly hear contestants, which is a critical concern for a public speaking competition.</p>
+          <p>Furthermore, participation from external campuses fell short of expectations, with only two other IPG campuses contributing representatives. Given the competition's aspiration to foster inter-campus engagement and camaraderie, this limited external participation represents a missed opportunity to broaden the event's reach and impact.</p>
+
+          <h4>4.0 Recommendations</h4>
+          <p>In order to elevate the quality and impact of future competitions, the following recommendations are proposed. First and foremost, a dedicated time-keeper should be appointed to monitor and strictly enforce the schedule throughout the event. Clear time signals, such as visual countdown timers or designated warning cues, should be implemented to ensure all sessions conclude within their allocated time slots.</p>
+          <p>Secondly, a comprehensive technical rehearsal should be conducted at least one full day prior to the competition. This should include thorough checks of all audio-visual equipment, with contingency plans prepared in the event of unexpected technical failures on the day of the competition.</p>
+          <p>Thirdly, the outreach process for external campus participation should commence significantly earlier. Formal invitations, accompanied by detailed information packages, should be disseminated to prospective campuses no later than two months before the event. This would afford campus coordinators sufficient time to organise internal selection processes and adequately prepare their representatives.</p>
+
+          <h4>5.0 Conclusion</h4>
+          <p>In conclusion, the 'Speak Up! Write Bold!' English Language Competition was a commendable and largely successful inaugural inter-campus event that meaningfully contributed to the English language learning culture at IPG Kampus Batu Lintang. Despite minor logistical and technical challenges, the competition fulfilled its primary objectives of enhancing students' communicative competence, fostering creativity, and inspiring a love for the English language. It is earnestly hoped that this competition will be institutionalised as an annual event at the campus, serving as a vibrant and enduring platform for students to celebrate and advance their English language abilities. With the implementation of the proposed recommendations, future editions of 'Speak Up! Write Bold!' have every potential to become a flagship English language event not only within IPG Kampus Batu Lintang, but across the broader IPG network.</p>
+
+          <div class="seal">— End of Digital Portfolio —</div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer>
+      Prepared by Harvard Ngu Wei Jie · IPG Kampus Batu Lintang · GEEC1052 Effective Communication in English
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>
